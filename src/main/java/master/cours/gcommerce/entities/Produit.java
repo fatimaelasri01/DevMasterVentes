@@ -1,12 +1,11 @@
 package master.cours.gcommerce.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import master.cours.gcommerce.dtos.ProduitDTO;
 
 import java.util.UUID;
 
@@ -21,4 +20,14 @@ public class Produit {
     private String designation;
     private double prix;
     private int quantite;
+
+    //pour la jointure on lit de haut au bas par exemple ici on a many produit pour une categorie
+    //cascade si on supprime parent les enfants sont supprimer ,  fetch lorsque je recupere un produit je recupere ca valeur acec lazy quand je recupere l objet parent je recupere pas ses enfants
+    @JsonIgnore
+    @ManyToOne
+    Categorie categorie;
+
+    public ProduitDTO toDTO(){
+       return new ProduitDTO(id, designation, prix, quantite, categorie.toDTO());
+    }
 }

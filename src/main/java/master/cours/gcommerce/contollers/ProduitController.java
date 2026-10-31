@@ -2,6 +2,7 @@ package master.cours.gcommerce.contollers;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import master.cours.gcommerce.entities.Produit;
 import master.cours.gcommerce.services.ProduitService;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class ProduitController {
     }
 
     @Operation(description = "ajouter produit")
-    @PostMapping("produit")
-    public Produit addProduit(@RequestBody Produit produit){
+    @PostMapping("produits")
+    public Produit addProduit(@Parameter(description = "Introduire un nouveau produit") @RequestBody Produit produit){
         return this.produitService.addProduit(produit);
     }
     @GetMapping("produits")
@@ -30,7 +31,13 @@ public class ProduitController {
 
     @GetMapping("produits/{id}")
     public Produit getProduitById(@PathVariable UUID id){
-        return new Produit();
+
+        return produitService.getProduitById(id);
+    }
+
+    @DeleteMapping("produits/{id}")
+    public boolean deleteProduit(@PathVariable UUID id){
+        return produitService.deleteProduitById(id);
     }
 
 }

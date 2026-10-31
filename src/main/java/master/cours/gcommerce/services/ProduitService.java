@@ -5,6 +5,7 @@ import master.cours.gcommerce.repositories.ProduitRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProduitService {
@@ -21,5 +22,14 @@ public class ProduitService {
 
     public List<Produit> getAllProduits() {
         return produitRepository.findAll();
+    }
+
+    public Produit getProduitById(UUID id) {
+        return produitRepository.findById(id).orElse(null); // optional ca veut dire si on ne revoit rien n a pas de probleme on ajoute orElse(null) si il retourn rien car on retourn produit et non optionnal
+    }
+
+    public boolean deleteProduitById(UUID id) {
+        produitRepository.deleteById(id);
+        return !produitRepository.existsById(id); //pour verifier que le produit est bien supprimer
     }
 }
