@@ -37,9 +37,12 @@ public class CategorieService {
     }
 
     public List<ProduitDTO> getAllProduits(String nomcat) {
-        return categorieRepository.findCategorieByNom(nomcat).getProduits().stream().map(Produit::toDTO).toList();  // produit->produit.toDTO()
+        //return categorieRepository.findCategorieByNom(nomcat).getProduits().stream().map(Produit::toDTO).toList();  // produit->produit.toDTO()
         // stream : transforme une liste a une flux pour luis appliquer une transformation
         // map va appliquer la transformation a chaque element de stream
+        return produitRepository.findByCategorieNom(nomcat).stream().map(Produit::toDTO).toList();
+        // apres by on a l attribut de produit
+        // si on fait categorienom il va considerer que ce nom est un attribut de produit mais avec N il va considerer que categorie est un attribut de produit et il va chercher dans categorie le nom
     }
 
     public boolean deleteCategorieById(Long id){

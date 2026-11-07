@@ -1,7 +1,10 @@
 package master.cours.gcommerce.services;
 
+import master.cours.gcommerce.entities.CategorieStats;
 import master.cours.gcommerce.entities.Produit;
 import master.cours.gcommerce.repositories.ProduitRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,13 +18,16 @@ public class ProduitService {
         this.produitRepository = produitRepository;
     }
 
-
+    /*
     public Produit addProduit(Produit produit) {
         return this.produitRepository.save(produit);
-    }
+    }*/
 
-    public List<Produit> getAllProduits() {
-        return produitRepository.findAll();
+    public List<Produit> getAllProduits(int page, int size) {
+        // objet pagination pour definir le nombre des pages et le size
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("designation").ascending());
+        return produitRepository.findAll(pageRequest).getContent();
+        // on ajoute getcontent car on renvoie une list de produit et non pa une page
     }
 
     public Produit getProduitById(UUID id) {
@@ -31,5 +37,9 @@ public class ProduitService {
     public boolean deleteProduitById(UUID id) {
         produitRepository.deleteById(id);
         return !produitRepository.existsById(id); //pour verifier que le produit est bien supprimer
+    }
+
+    public List<CategorieStats> compterProduitParCategorie() {
+        return produitRepository.compterProduitsParCategorie();
     }
 }
