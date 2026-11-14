@@ -51,7 +51,7 @@ public class ProduitController {
         return produitService.deleteProduitById(id);
     }
 
-    @GetMapping("produits/stats")
+    @GetMapping("/stats")
     // avec objet il va pas retourner un vrai json juste une liste de liste
     public List<CategorieStats> stats(){
         return produitService.compterProduitParCategorie();
