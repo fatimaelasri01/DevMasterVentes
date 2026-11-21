@@ -1,0 +1,13 @@
+package univ.fac.demokeycloak;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemokeycloakApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DemokeycloakApplication.class, args);
+    }
+
+}
